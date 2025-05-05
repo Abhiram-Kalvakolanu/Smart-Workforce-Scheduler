@@ -1,7 +1,7 @@
 # SailorShift – Smart Workforce Scheduler
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/561cc48d-556a-4366-95c4-ab61ee0b11e1" alt="SailorShift Banner" width="700">
+  <img src="https://github.com/user-attachments/assets/561cc48d-556a-4366-95c4-ab61ee0b11e1" alt="SailorShift Banner" width="400">
 </p>
 
 
