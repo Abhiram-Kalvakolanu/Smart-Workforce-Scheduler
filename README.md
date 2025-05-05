@@ -1,5 +1,10 @@
 # SailorShift – Smart Workforce Scheduler
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/561cc48d-556a-4366-95c4-ab61ee0b11e1" alt="SailorShift Banner" width="700">
+</p>
+
+
 **SailorShift** is an AI-powered workforce scheduling solution designed for small and medium-sized enterprises (SMEs). It automates shift scheduling, leave and swap requests, and employee preference handling through intelligent algorithms and a conversational AI chatbot. The system features two integrated web portals — one for employers and another for employees — making workforce management intuitive, efficient, and scalable.
 
 ---
