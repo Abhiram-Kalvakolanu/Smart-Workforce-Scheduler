@@ -102,7 +102,7 @@ def rag_qa(user_query):
 # Gemini-powered day parser
 # ---------------------------
 def parse_day_from_gemini(user_input):
-    client = genai.Client(api_key="AIzaSyDrZvIV7zOOujGWEwuIwQciwLyXeiNEaNk")
+    client = genai.Client(api_key="***********")
     prompt = (
         f"The user said:\n\"{user_input}\"\n\n"
         "Which day of the week are they referring to for a leave? "
