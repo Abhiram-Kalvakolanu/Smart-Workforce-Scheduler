@@ -188,7 +188,7 @@ def get_general_response(user_input):
 
 def check_schedule_query(user_text, default_employee="Maria Gonzalez"):
     try:
-        client = genai.Client(api_key="AIzaSyDrZvIV7zOOujGWEwuIwQciwLyXeiNEaNk")
+        client = genai.Client(api_key="************")
 
         prompt = (
             f"You are a schedule analyzer for Paradise Restaurant.\n"
