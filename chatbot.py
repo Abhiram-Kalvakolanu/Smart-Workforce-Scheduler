@@ -146,7 +146,7 @@ def get_general_response(user_input):
     Uses Gemini to generate a general response using a custom assistant persona.
     """
     try:
-        client = genai.Client(api_key="AIzaSyDrZvIV7zOOujGWEwuIwQciwLyXeiNEaNk")
+        client = genai.Client(api_key="*********************")
 
         system_prompt = (
             "You are a helpful, polite, and smart assistant for a restaurant called Paradise Restaurant.\n"
