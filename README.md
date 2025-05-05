@@ -1,7 +1,7 @@
 # SailorShift – Smart Workforce Scheduler
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/561cc48d-556a-4366-95c4-ab61ee0b11e1" alt="SailorShift Banner" width="400">
+  <img src="https://github.com/user-attachments/assets/561cc48d-556a-4366-95c4-ab61ee0b11e1" alt="SailorShift Banner" width="500">
 </p>
 
 
@@ -48,6 +48,10 @@ SailorShift uses Supabase (PostgreSQL) as its cloud database with the following 
 - Built using Gemini 2.0 Flash with RAG (Retrieval-Augmented Generation)
 - Handles natural language queries and schedule actions
 - Supports both text and voice input
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4b0cd5f5-3f8e-40ab-813e-23d9b463124d" alt="Chatbot" width="500">
+</p>
 
 ---
 
