@@ -22,7 +22,7 @@ from google.genai import types
 DOC_PATH = "C:/Users/sivad/Documents/Chatbot/paradise.pdf"
 
 # Optional: put your RAG model key here if different from your main chat keys
-RAG_API_KEY = "AIzaSyDrZvIV7zOOujGWEwuIwQciwLyXeiNEaNk"
+RAG_API_KEY = "*********************"
 
 import fitz  # <-- Add this at the top of your file
 
