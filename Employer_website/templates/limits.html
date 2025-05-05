@@ -1,0 +1,149 @@
+<!-- templates/limits.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Set or Update Limits</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='limits.css') }}">
+</head>
+<body>
+  <button class="back-btn" onclick="window.location.href='/'">Back to Dashboard</button>
+  <h1>Set/Update Limits for Each Employee</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>EMPLOYEE NAME</th>
+        <th>DESIGNATION</th>
+        <th>MINIMUM HOURS</th>
+        <th>MAXIMUM HOURS</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in limit_rows %}
+      <tr>
+        <!-- 
+           row[0] => employee_name
+           row[1] => designation
+           row[2] => min_hours
+           row[3] => max_hours
+           row[4] => employee_id
+        -->
+        <td class="cell-clickable"
+            data-employee-name="{{ row[0] }}"
+            data-designation="{{ row[1] }}"
+            data-min="{{ row[2] }}"
+            data-max="{{ row[3] }}"
+            data-employee-id="{{ row[4] }}">
+          {{ row[0] }}
+        </td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Dialog Box -->
+  <div id="limitDialog" class="dialog-overlay">
+    <div class="dialog-content">
+      <span class="close-dialog" id="closeDialog">&times;</span>
+      <h2 id="dialogTitle">Set or Update Limits</h2>
+
+      <form id="limitForm" onsubmit="return false;">
+        <label for="employeeName">Employee:</label>
+        <input type="text" id="employeeName" name="employeeName" readonly />
+
+        <label for="employeeDesignation">Designation:</label>
+        <input type="text" id="employeeDesignation" name="employeeDesignation" readonly />
+
+        <label for="minHours">Set Minimum Hours:</label>
+        <input type="number" id="minHours" name="minHours" required />
+
+        <label for="maxHours">Set Maximum Hours:</label>
+        <input type="number" id="maxHours" name="maxHours" required />
+
+        <!-- Hidden field to store numeric employeeId -->
+        <input type="hidden" id="employeeId" name="employeeId" />
+
+        <button type="button" onclick="submitLimits()">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let lastClickedRow = null;  // Keep track of which row we clicked
+
+    document.querySelectorAll('.cell-clickable').forEach(function(cell) {
+      cell.addEventListener('click', function() {
+        // The cell is in a <td>, so we can get the row via parentNode
+        lastClickedRow = cell.parentNode;
+
+        const empName = cell.getAttribute('data-employee-name');
+        const designation = cell.getAttribute('data-designation');
+        const minVal = cell.getAttribute('data-min');
+        const maxVal = cell.getAttribute('data-max');
+        const empId = cell.getAttribute('data-employee-id');
+
+        document.getElementById('employeeName').value = empName;
+        document.getElementById('employeeDesignation').value = designation;
+        document.getElementById('minHours').value = minVal;
+        document.getElementById('maxHours').value = maxVal;
+        document.getElementById('employeeId').value = empId;
+
+        // Show the popup
+        document.getElementById('limitDialog').style.display = 'flex';
+      });
+    });
+
+    // Close dialog on X
+    document.getElementById('closeDialog').addEventListener('click', function() {
+      document.getElementById('limitDialog').style.display = 'none';
+    });
+
+    // Submit updated limits
+    function submitLimits() {
+      const employeeName = document.getElementById('employeeName').value;
+      const minHours = document.getElementById('minHours').value;
+      const maxHours = document.getElementById('maxHours').value;
+      const employeeId = parseInt(document.getElementById('employeeId').value);
+
+      fetch('/update_limits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          employee_name: employeeName,
+          min_hours: minHours,
+          max_hours: maxHours,
+          employee_id: employeeId
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // 1) Update the row in the UI instantly
+          //    lastClickedRow has <td> cells: 
+          //    [0] => name, [1] => designation, [2] => min_hours, [3] => max_hours
+          lastClickedRow.children[2].textContent = data.new_min; // min_hours
+          lastClickedRow.children[3].textContent = data.new_max; // max_hours
+
+          // 2) Also update the data-* attributes for future clicks
+          let clickableCell = lastClickedRow.children[0]; // the first cell with the data- attributes
+          clickableCell.setAttribute('data-min', data.new_min);
+          clickableCell.setAttribute('data-max', data.new_max);
+
+          // 3) Hide the popup
+          document.getElementById('limitDialog').style.display = 'none';
+
+        } else {
+          alert('Error: ' + data.error);
+        }
+      })
+      .catch(err => {
+        alert('Request failed: ' + err);
+      });
+    }
+  </script>
+</body>
+</html>

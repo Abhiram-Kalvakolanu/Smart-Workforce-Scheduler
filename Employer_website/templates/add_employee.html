@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_employee.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    
+    <!-- Left side: Form Section -->
+    <div class="form-section">
+        <h2>Add New Employee</h2>
+        <form method="POST" action="/submit_employee">
+            <label>Employee Name:</label>
+            <input type="text" name="Employee_name" required><br><br>
+
+            <label>Designation:</label>
+            <input type="text" name="Designation" required><br><br>
+
+            <label>Select Role:</label>
+            <select name="Role" required>
+                {% for role in roles %}
+                    <option value="{{ role }}">{{ role }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <h3>Give Skill Ratings:</h3>
+            {% for role in roles %}
+                <label>Skill rating for {{ role }}:</label>
+                <input type="number" name="{{ role }}" required min="0"><br><br>
+            {% endfor %}
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <button onclick="window.location.href='/add_employee'">Add Another Employee</button>
+        <button onclick="window.location.href='/'">Back to Dashboard</button>
+    </div>
+    
+    <!-- Right side: Table Section -->
+    <div class="table-section">
+        <h3>Existing Employees</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% for col in columns %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for emp in employees %}
+                <tr>
+                    {% for value in emp %}
+                        {% if loop.index0 == 1 %}
+                            <!-- Make second column clickable -->
+                            <td>
+                                <span class="click-employee" data-empid="{{ emp[0] }}">{{ value }}</span>
+                            </td>
+                        {% else %}
+                            <td>{{ value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ============ UPDATE OVERLAY ============ -->
+<div id="updateOverlay">
+    <div id="updateBox">
+        <span id="closeUpdate">&times;</span>
+        <h3>Update Skill Ratings for <span id="updateEmpName"></span></h3>
+        <form id="updateForm" onsubmit="return false;">
+            <!-- Hidden field for employee ID -->
+            <input type="hidden" id="updateEmployeeID">
+
+            <!-- We will dynamically add rating fields here -->
+            <div id="updateFormFields"></div>
+
+            <button id="updateSubmitBtn">Update</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Pass roles from Python to JavaScript
+    const roles = JSON.parse('{{ roles|tojson|safe }}');
+
+    // Elements for overlay
+    const updateOverlay = document.getElementById('updateOverlay');
+    const updateBox = document.getElementById('updateBox');
+    const closeUpdate = document.getElementById('closeUpdate');
+    const updateEmpName = document.getElementById('updateEmpName');
+    const updateEmployeeID = document.getElementById('updateEmployeeID');
+    const updateFormFields = document.getElementById('updateFormFields');
+    const updateSubmitBtn = document.getElementById('updateSubmitBtn');
+
+    // Close overlay
+    closeUpdate.addEventListener('click', () => {
+        updateOverlay.style.display = 'none';
+        updateFormFields.innerHTML = '';
+    });
+
+    // Close if clicking outside the box
+    window.addEventListener('click', (e) => {
+        if (e.target === updateOverlay) {
+            updateOverlay.style.display = 'none';
+            updateFormFields.innerHTML = '';
+        }
+    });
+
+    // Handle click on employee name
+    document.querySelectorAll('.click-employee').forEach(item => {
+        item.addEventListener('click', () => {
+            const empID = item.dataset.empid;
+            openUpdateOverlay(empID);
+        });
+    });
+
+    // Open overlay, fetch existing data, fill fields
+    function openUpdateOverlay(empID) {
+        fetch(`/employee_data/${empID}`)
+            .then(res => res.json())
+            .then(data => {
+                updateOverlay.style.display = 'flex';
+                updateEmpName.textContent = data['Employee_name'];
+                updateEmployeeID.value = data['Employee_ID'];
+
+                // Create input fields for each role
+                updateFormFields.innerHTML = '';
+                roles.forEach(role => {
+                    const label = document.createElement('label');
+                    label.textContent = `Update skill rating for ${role}:`;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.name = role;
+                    input.value = data[role] || 0;
+                    input.min = 0;
+
+                    updateFormFields.appendChild(label);
+                    updateFormFields.appendChild(document.createElement('br'));
+                    updateFormFields.appendChild(input);
+                    updateFormFields.appendChild(document.createElement('br'));
+                    updateFormFields.appendChild(document.createElement('br'));
+                });
+            })
+            .catch(err => {
+                console.error('Error fetching employee data:', err);
+                alert('Failed to fetch employee data');
+            });
+    }
+
+    // Handle update submission
+    updateSubmitBtn.addEventListener('click', () => {
+        const empID = updateEmployeeID.value;
+        // Collect updated ratings
+        const ratingInputs = updateFormFields.querySelectorAll('input[type="number"]');
+        let ratings = {};
+        ratingInputs.forEach(input => {
+            ratings[input.name] = parseInt(input.value, 10) || 0;
+        });
+
+        // Send update to server
+        fetch('/update_employee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Employee_ID: empID,
+                ratings: ratings
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            // Close overlay and reload page to show updated table
+            updateOverlay.style.display = 'none';
+            updateFormFields.innerHTML = '';
+            window.location.reload();
+        })
+        .catch(err => {
+            console.error('Error updating employee:', err);
+            alert('Failed to update employee');
+        });
+    });
+</script>
+
+</body>
+</html>

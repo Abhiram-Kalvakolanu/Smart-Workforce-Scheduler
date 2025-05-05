@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+<header>
+  <!-- Buttons on the right side -->
+  <div class="header-right">
+    <button class="profile-btn">View Profile</button>
+    <button class="logout-btn">Logout</button>
+  </div>
+</header>
+
+<main>
+  <!-- Centered Branding -->
+  <div class="branding-center">
+    <h1 class="shift-sync-title">Sailor Shift</h1>
+    <p class="shift-sync-tagline">Intelligent workforce management for modern teams</p>
+  </div>
+
+  <!-- Main Dashboard Buttons -->
+  <div class="button-container">
+    <button class="dashboard-btn" onclick="window.location.href='/add_employee'">Add Employees</button>
+    <button class="dashboard-btn" id="uploadDocBtn">Upload RAG Document</button>
+    <button class="dashboard-btn" onclick="window.location.href='/select_candidates'">Enter Contact Details</button>
+    <button class="dashboard-btn" id="enterRolesBtn">Enter Roles</button>
+    <button class="dashboard-btn" onclick="window.location.href='/set_limits'">Set Limits</button>
+	<button class="dashboard-btn" onclick="window.location.href='/pay'">Pay Details</button>
+
+  </div>
+</main>
+
+<!-- Upload Document Dialogue Box -->
+<div id="uploadOverlay">
+  <div id="uploadBox">
+    <span id="closeUpload">&times;</span>
+    <h3>Upload Document (PDF)</h3>
+    <form id="uploadForm" action="/upload_pdf" method="POST" enctype="multipart/form-data">
+      <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- Enter Roles Dialogue Box -->
+<div id="rolesOverlay">
+  <div id="rolesBox">
+    <span id="closeRoles">&times;</span>
+    <h3>Enter Roles</h3>
+    <form id="rolesForm">
+      <textarea id="rolesInput" placeholder="Enter roles separated by commas" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+<script src="dashboard.js"></script>
+

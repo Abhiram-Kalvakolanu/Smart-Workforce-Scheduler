@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Candidates</title>
+  <!-- Link the new CSS file for this page -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='select_candidates.css') }}">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <button class="back-btn" onclick="window.location.href='/'">Back to Dashboard</button>
+  </header>
+
+  <h1>Select Candidates</h1>
+
+  <!-- First table: add or update email/phone for employees -->
+  <div class="table-container">
+    <h2>Enter/Update Email and Phone</h2>
+    <table class="form-table">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp_id, emp_name in employees %}
+        <tr>
+          <form method="POST" action="/update_candidate">
+            <td>
+              <input type="text" name="employee_id" value="{{ emp_id }}" readonly>
+            </td>
+            <td>
+              <input type="text" name="employee_name" value="{{ emp_name }}" readonly>
+            </td>
+            <td>
+              <input type="text" name="email" placeholder="Enter Email">
+            </td>
+            <td>
+              <input type="text" name="phone" placeholder="Enter Phone">
+            </td>
+            <td>
+              <button type="submit" class="submit-btn">Submit</button>
+            </td>
+          </form>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- Second table: show existing candidate credentials -->
+  <div class="table-container">
+    <h2>Current Stored Credentials</h2>
+    <table class="creds-table">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in cred_rows %}
+        <tr>
+          <td>{{ c[0] }}</td>
+          <!-- Make the name clickable with a special span class -->
+          <td>
+            <span class="clickable-name" 
+                  data-empname="{{ c[1] }}" 
+                  data-email="{{ c[2] }}">
+              {{ c[1] }}
+            </span>
+          </td>
+          <td>{{ c[2] }}</td>
+          <td>{{ c[3] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ SEND CREDENTIALS OVERLAY ============ -->
+  <div id="sendOverlay">
+    <div id="sendBox">
+      <span id="closeSend">&times;</span>
+      <h3>Send Credentials</h3>
+      <p id="overlayEmpName"></p>
+      <button id="sendCredsBtn">Send Credentials</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Overlay elements
+      const sendOverlay = document.getElementById('sendOverlay');
+      const sendBox = document.getElementById('sendBox');
+      const closeSend = document.getElementById('closeSend');
+      const overlayEmpName = document.getElementById('overlayEmpName');
+      const sendCredsBtn = document.getElementById('sendCredsBtn');
+
+      let currentEmpName = "";
+      let currentEmpEmail = "";
+
+      // Make employee names clickable in the "Current Stored Credentials" table
+      document.querySelectorAll('.clickable-name').forEach(item => {
+        item.addEventListener('click', () => {
+          currentEmpName = item.dataset.empname;
+          currentEmpEmail = item.dataset.email;
+          openSendOverlay(currentEmpName, currentEmpEmail);
+        });
+      });
+
+      // Function to open the overlay
+      function openSendOverlay(name, email) {
+        overlayEmpName.textContent = `Send Credentials to ${name} (${email})`;
+        sendOverlay.style.display = 'flex';
+      }
+
+      // Close overlay when clicking on 'x' button
+      closeSend.addEventListener('click', () => {
+        sendOverlay.style.display = 'none';
+      });
+
+      // Close overlay when clicking outside the box
+      window.addEventListener('click', (e) => {
+        if (e.target === sendOverlay) {
+          sendOverlay.style.display = 'none';
+        }
+      });
+
+      // Handle "Send Credentials" button
+      sendCredsBtn.addEventListener('click', () => {
+        fetch('/send_credentials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            empName: currentEmpName,
+            empEmail: currentEmpEmail
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          sendOverlay.style.display = 'none';
+        })
+        .catch(err => {
+          alert('Error sending email: ' + err);
+          console.error(err);
+          sendOverlay.style.display = 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

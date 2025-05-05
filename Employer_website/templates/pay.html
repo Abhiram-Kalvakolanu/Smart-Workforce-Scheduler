@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pay Details</title>
+  <!-- Link to your CSS file -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='pay.css') }}">
+</head>
+<body>
+  <h1>Pay Details</h1>
+
+  <!-- Table replicating changed_schedule + extra columns -->
+  <table id="pay-table">
+    <thead>
+      <tr>
+        <th>Employee_ID</th>
+        <th>Employee_Name</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+        <th>Sun</th>
+        <th>Days Worked</th>
+        <th>Weekly Pay (Hourly Rate - CAD 25)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Example rows based on your screenshot -->
+      <tr>
+        <td>1</td>
+        <td>Prashanth</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td></td> <!-- Days Worked will be filled by JS -->
+        <td></td> <!-- Weekly Pay will be filled by JS -->
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Avinash</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Roshan</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Abhiram</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Lalith</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Simple JS to sum days and compute pay at CAD 25/day -->
+  <script>
+    const table = document.getElementById('pay-table');
+    const rows = table.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+
+      // Sum columns 2..8 (Mon..Sun) => indexes 2..8
+      let totalDays = 0;
+      for (let i = 2; i <= 8; i++) {
+        totalDays += parseInt(cells[i].innerText, 10);
+      }
+
+      // Put the total in the 9th cell => index 9
+      cells[9].innerText = totalDays;
+
+      // Calculate weekly pay (25 CAD per day)
+      const weeklyPay = totalDays * 25;
+
+      // Put the weekly pay in the 10th cell => index 10
+      cells[10].innerText = weeklyPay;
+    });
+  </script>
+</body>
+</html>
