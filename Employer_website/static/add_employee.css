@@ -1,0 +1,165 @@
+/* Overall page styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, #74ebd5, #ACB6E5);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* FLEX CONTAINER FOR FORM + TABLE */
+.page-container {
+    display: flex;
+    align-items: flex-start; /* top-aligned */
+    gap: 20px;               /* space between form & table */
+    margin: 0 auto;
+    /* If you want the entire page to center horizontally, 
+       you can use max-width here:
+       max-width: 1200px;
+       or something similar.
+    */
+}
+
+/* FORM SECTION (LEFT) */
+.form-section {
+    width: 40%; /* narrower width for the form */
+    min-width: 300px; /* ensure it doesn't get too small on narrow screens */
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* HEADINGS INSIDE THE FORM SECTION */
+.form-section h2,
+.form-section h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Form inputs */
+.form-section form label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.form-section form input[type="text"],
+.form-section form input[type="number"],
+.form-section form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Buttons inside the form section */
+.form-section button {
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-section button:hover {
+    background-color: #2575fc;
+    transform: translateY(-3px);
+}
+
+/* TABLE SECTION (RIGHT) */
+.table-section {
+    flex: 1; /* take remaining space */
+    background: rgba(255,255,255,0.3); /* optional subtle background */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.table-section h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #6a11cb;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* =========== Update Overlay Styles =========== */
+#updateOverlay {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#updateBox {
+    position: relative;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 400px;
+    text-align: center;
+}
+
+#updateBox h3 {
+    margin-top: 0;
+}
+
+#closeUpdate {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #555;
+}
+
+#closeUpdate:hover {
+    color: #d63031;
+}
+
+/* Style for clickable employee names */
+.click-employee {
+    color: #6a11cb; /* Match button color */
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.click-employee:hover {
+    color: #2575fc;
+    text-decoration-color: #2575fc;
+}

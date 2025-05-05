@@ -1,0 +1,202 @@
+/* Overall Page Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  /* Single, modern gradient background */
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ---------- HEADER ---------- */
+header {
+  /* No background, so the gradient shows behind the header */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px;
+}
+
+/* Container for top-right buttons */
+.header-right {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- SHIFT SYNC BRANDING IN THE CENTER ---------- */
+.branding-center {
+  text-align: center;
+  margin-bottom: 40px;
+  /* Optional: add top margin if you want more spacing */
+  /* margin-top: 40px; */
+}
+
+/* Large gradient text for the brand name */
+.shift-sync-title {
+  font-size: 3rem; /* bigger for emphasis */
+  margin: 0;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.shift-sync-tagline {
+  margin: 8px 0 0;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* ---------- HEADER BUTTONS ---------- */
+.profile-btn, .logout-btn {
+  background-color: #6a11cb; /* stylish purple */
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Different color for Logout button */
+.logout-btn {
+  background-color: #ff4b2b; /* vibrant red for logout */
+}
+
+.profile-btn:hover {
+  background-color: #2575fc; /* hover color for profile */
+  transform: translateY(-2px);
+}
+
+.logout-btn:hover {
+  background-color: #ff416c; /* hover color for logout */
+  transform: translateY(-2px);
+}
+
+/* ---------- MAIN ---------- */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 20px;
+}
+
+/* Buttons Container */
+.button-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;  /* so buttons wrap on smaller screens */
+  justify-content: center;
+}
+
+/* Dashboard Buttons */
+.dashboard-btn {
+  padding: 15px 25px;
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+  outline: none;
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  background-color: #f1f1f1;
+}
+
+/* ---------- OVERLAYS (UPLOAD & ROLES) ---------- */
+#uploadOverlay,
+#rolesOverlay {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#uploadBox,
+#rolesBox {
+  position: relative;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 350px;
+  text-align: center;
+}
+
+#rolesBox {
+  width: 400px;
+}
+
+#uploadBox h3,
+#rolesBox h3 {
+  margin-top: 0;
+}
+
+/* File input styling */
+#uploadForm input[type="file"] {
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Buttons inside Overlays */
+#uploadForm button,
+#rolesForm button {
+  padding: 10px 20px;
+  background-color: #6a11cb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  outline: none;
+}
+
+#uploadForm button:hover,
+#rolesForm button:hover {
+  background-color: #2575fc;
+}
+
+/* Close icons for Overlays */
+#closeUpload,
+#closeRoles {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  cursor: pointer;
+  color: #555;
+}
+
+#closeUpload:hover,
+#closeRoles:hover {
+  color: #ff416c;
+}
+
+/* Textarea styling */
+#rolesForm textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  resize: vertical;
+  margin-top: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
