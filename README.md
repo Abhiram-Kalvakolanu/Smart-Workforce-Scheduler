@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 SailorShift streamlines administrative tasks such as:
 
@@ -17,9 +17,9 @@ It is built with a focus on automation, usability, and real-time interactivity t
 
 ---
 
-## 🗃️ Data Architecture
+## Data Architecture
 
-SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the following core tables:
+SailorShift uses Supabase (PostgreSQL) as its cloud database with the following core tables:
 
 - `employees` – stores roles and skill ratings  
 - `preferences` – employee workday preferences  
@@ -29,24 +29,24 @@ SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the follow
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
-### 🔄 Automated Scheduling
+### Automated Scheduling
 - Optimizes shifts based on preferences, role limits, and skill ratings
 - Balances workloads while respecting contractual hour limits
 
-### 📝 Leave & Swap Management
+### Leave & Swap Management
 - Employees can request leaves/swaps via UI or chatbot
 - Auto-identifies suitable replacements and updates schedules live
 
-### 💬 AI Chatbot Integration
-- Built using **Gemini 2.0 Flash** with **RAG (Retrieval-Augmented Generation)**
+### AI Chatbot Integration
+- Built using Gemini 2.0 Flash with RAG (Retrieval-Augmented Generation)
 - Handles natural language queries and schedule actions
 - Supports both text and voice input
 
 ---
 
-## 🖥️ System Components
+## System Components
 
 ### Employer Portal
 - Add employees and assign roles/skills
@@ -61,7 +61,7 @@ SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the follow
 
 ---
 
-## 🧠 Core Algorithms
+## Core Algorithms
 
 - **Leave Request Algorithm**: Finds highest-skill available replacement
 - **Swap Request Algorithm**: Replaces shift with suitable low-skill peer
@@ -69,7 +69,7 @@ SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the follow
 
 ---
 
-## 📊 Insights
+## Insights
 
 - Improved admin efficiency and reduced manual errors
 - Highly useful for SMEs with frequent scheduling changes
@@ -77,7 +77,7 @@ SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the follow
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: HTML, CSS, JavaScript, React.js, Node.js  
 - **Backend**: Python (Flask), PostgreSQL (Supabase)  
@@ -86,12 +86,13 @@ SailorShift uses **Supabase (PostgreSQL)** as its cloud database with the follow
 
 ---
 
-## ✅ Conclusion
+## Conclusion
 
 SailorShift delivers an end-to-end solution for workforce scheduling by combining automation, user-friendly interfaces, and AI-powered support. While originally aimed at enterprise scalability, it proved highly effective for SMEs through real-world testing. Future upgrades will include mobile apps, analytics dashboards, and payroll integration.
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
-🔗 [ShiftSync Live Website](https://sailor-shift.lovable.app/)
+[ShiftSync Live Website](https://sailor-shift.lovable.app/)
+
